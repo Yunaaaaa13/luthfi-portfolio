@@ -19,7 +19,7 @@
     --card:#141e34;
     --border:rgba(0,194,168,0.18);
   }
-  html{scroll-behavior:smooth}
+  /* Smooth scrolling premium handled by JS with navbar offset */
   body{
     background:var(--navy);
     color:var(--white);
@@ -463,9 +463,87 @@
     transition:opacity .6s ease, transform .6s ease;
   }
   .fade-in.visible{opacity:1;transform:translateY(0)}
+  /* PARTICLE BACKGROUND */
+  #particles{
+    position:fixed;
+    inset:0;
+    width:100vw;
+    height:100vh;
+    z-index:0;
+    pointer-events:none;
+  }
+  .page{
+    position:relative;
+    z-index:1;
+  }
+
+  /* MOBILE NAV + RESPONSIVE */
+  .nav-toggle{
+    display:none;
+    background:transparent;
+    border:1px solid rgba(255,255,255,0.18);
+    border-radius:10px;
+    padding:0.6rem 0.8rem;
+    color:var(--white);
+    cursor:pointer;
+    font-size:1rem;
+  }
+  .nav-toggle:focus{outline:2px solid rgba(0,194,168,0.35);outline-offset:2px}
+  .nav-links-mobile{
+    display:none;
+    position:fixed;
+    top:70px;
+    left:12px;
+    right:12px;
+    z-index:101;
+    background:rgba(11,20,38,0.95);
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:0.8rem 0.7rem;
+    backdrop-filter:blur(12px);
+    box-shadow:0 20px 60px rgba(0,0,0,0.35);
+  }
+  .nav-links-mobile ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0.3rem}
+  .nav-links-mobile a{
+    display:block;
+    padding:0.75rem 0.9rem;
+    border-radius:12px;
+    color:var(--gray);
+    text-decoration:none;
+  }
+  .nav-links-mobile a:hover{background:rgba(0,194,168,0.1);color:var(--teal)}
+  .nav-links-mobile.show{display:block}
+
+  @media (max-width: 768px){
+    nav{padding:1.05rem 1.2rem}
+    .nav-links{display:none}
+    .nav-toggle{display:inline-flex;align-items:center;gap:10px}
+    .hero{padding:6.5rem 1.2rem 3.2rem}
+    .hero-inner{grid-template-columns:1fr;gap:2.2rem}
+    .hero-photo-wrap{display:flex;justify-content:flex-start}
+    .hero-photo{width:220px;height:280px}
+    section{padding:4.2rem 1.2rem}
+    .stats-strip{width:calc(100% - 0.4rem);margin:0.4rem auto}
+    .stats-strip{grid-template-columns:repeat(2,1fr)}
+    .skills-grid{grid-template-columns:1fr}
+    .projects-grid{grid-template-columns:1fr}
+    .certs-grid{grid-template-columns:1fr}
+    .activities-grid{grid-template-columns:1fr}
+    .contact-wrap{grid-template-columns:1fr;gap:1.6rem}
+    footer{padding:2rem 1.2rem}
+  }
+  @media (max-width: 480px){
+    nav{padding:1rem 1rem}
+    .hero{padding:6.2rem 1rem 3rem}
+    .hero-photo{width:200px;height:260px}
+    section{padding:3.8rem 1rem}
+  }
 </style>
 </head>
 <body>
+
+<canvas id="particles"></canvas>
+<div class="page">
 
 <nav>
   <div class="nav-logo">MLR.</div>
@@ -477,7 +555,20 @@
     <li><a href="#certifications">Certifications</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
+  <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false">☰ Menu</button>
 </nav>
+
+<div class="nav-links-mobile" id="navMobile">
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#certifications">Certifications</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</div>
+
 
 <!-- HERO -->
 <div class="hero" id="about">
@@ -789,11 +880,16 @@
           <div class="clink-icon">📱</div>
           +62 812-1361-6982
         </a>
+        <a href="https://www.linkedin.com/in/luthfi-rafif-5003521a1/" target="_blank" rel="noopener noreferrer" class="clink">
+          <div class="clink-icon">in</div>
+          LinkedIn Profile
+        </a>
         <div class="clink" style="cursor:default">
           <div class="clink-icon">📍</div>
           Jawa Barat, Indonesia
         </div>
       </div>
+
     </div>
     <div>
       <div style="background:var(--card);border:1px solid var(--border);border-radius:20px;padding:2rem;">
@@ -829,20 +925,183 @@
   <p>© 2026 Muhammad Luthfi Rafif · Built with passion · Information Systems, Telkom University Jakarta</p>
 </footer>
 
+</div>
 <script>
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('visible');
+  // Intersection reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // Premium smooth scrolling with navbar offset
+  (function(){
+    const nav = document.querySelector('nav');
+    const mobile = document.getElementById('navMobile');
+    const toggle = document.querySelector('.nav-toggle');
+
+    function closeMobile(){
+      if(!mobile) return;
+      mobile.classList.remove('show');
+      if(toggle) toggle.setAttribute('aria-expanded','false');
     }
-  });
-}, {threshold: 0.1});
 
-document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    function openMobile(){
+      if(!mobile) return;
+      mobile.classList.add('show');
+      if(toggle) toggle.setAttribute('aria-expanded','true');
+    }
 
-// Try to load the actual photo from the uploaded file
-// Since it's a local file, we embed it as base64 would require server processing
-// Instead we show the initials fallback gracefully
+    if(toggle && mobile){
+      toggle.addEventListener('click', () => {
+        const isOpen = mobile.classList.contains('show');
+        isOpen ? closeMobile() : openMobile();
+      });
+      mobile.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', () => closeMobile());
+      });
+      document.addEventListener('click', (ev) => {
+        if(!mobile.contains(ev.target) && !toggle.contains(ev.target)) closeMobile();
+      });
+    }
+
+    function scrollToEl(target){
+      if(!target) return;
+      const rect = target.getBoundingClientRect();
+      const navH = nav ? nav.offsetHeight : 0;
+      const y = window.pageYOffset + rect.top - navH - 10;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', (e) => {
+        const href = a.getAttribute('href');
+        if(!href || href === '#') return;
+        const id = href.slice(1);
+        const el = document.getElementById(id);
+        if(!el) return;
+        e.preventDefault();
+        closeMobile();
+        scrollToEl(el);
+      });
+    });
+  })();
+
+  // Particle background (performance-friendly)
+  (function(){
+    const canvas = document.getElementById('particles');
+    if(!canvas) return;
+    const ctx = canvas.getContext('2d');
+
+    const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(prefersReduced){
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      return;
+    }
+
+    let w, h, dpr;
+    let particles = [];
+    let raf = 0;
+    let last = 0;
+
+    const settings = {
+      maxParticles: 90,
+      lineDist: 130,
+      speed: 0.25,
+      particleRadius: [1, 2.2]
+    };
+
+    function resize(){
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      w = window.innerWidth;
+      h = window.innerHeight;
+      canvas.width = Math.floor(w * dpr);
+      canvas.height = Math.floor(h * dpr);
+      canvas.style.width = w + 'px';
+      canvas.style.height = h + 'px';
+
+      const count = Math.min(settings.maxParticles, Math.floor((w*h)/35000));
+      particles = new Array(count).fill(0).map(()=>{
+        const r = settings.particleRadius[0] + Math.random()*(settings.particleRadius[1]-settings.particleRadius[0]);
+        return {
+          x: Math.random()*w,
+          y: Math.random()*h,
+          vx: (Math.random()*2-1) * settings.speed,
+          vy: (Math.random()*2-1) * settings.speed,
+          r,
+        };
+      });
+    }
+
+    function draw(ts){
+      const dt = Math.min(32, ts - last || 16);
+      last = ts;
+
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+      ctx.clearRect(0,0,w,h);
+
+      // background glow
+      const grad = ctx.createRadialGradient(w*0.2, h*0.2, 0, w*0.2, h*0.2, Math.max(w,h)*0.7);
+      grad.addColorStop(0, 'rgba(0,194,168,0.10)');
+      grad.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0,0,w,h);
+
+      // update + draw dots + connections
+      for(let i=0;i<particles.length;i++){
+        const p = particles[i];
+        p.x += p.vx * (dt/16);
+        p.y += p.vy * (dt/16);
+        if(p.x < -10) p.x = w+10;
+        if(p.x > w+10) p.x = -10;
+        if(p.y < -10) p.y = h+10;
+        if(p.y > h+10) p.y = -10;
+
+        ctx.beginPath();
+        ctx.fillStyle = 'rgba(0,194,168,0.8)';
+        ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        ctx.fill();
+      }
+
+      // connections (cheap O(n^2) but with capped particles)
+      for(let i=0;i<particles.length;i++){
+        for(let j=i+1;j<particles.length;j++){
+          const a = particles[i], b = particles[j];
+          const dx = a.x-b.x, dy = a.y-b.y;
+          const dist = Math.hypot(dx,dy);
+          if(dist < settings.lineDist){
+            const alpha = (1 - dist/settings.lineDist) * 0.35;
+            ctx.strokeStyle = `rgba(0,194,168,${alpha})`;
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(a.x,a.y);
+            ctx.lineTo(b.x,b.y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      raf = requestAnimationFrame(draw);
+    }
+
+    function start(){
+      cancelAnimationFrame(raf);
+      resize();
+      raf = requestAnimationFrame(draw);
+    }
+
+    window.addEventListener('resize', () => {
+      // simple debounce via rAF
+      if(raf) cancelAnimationFrame(raf);
+      clearTimeout(window.__pTimeout);
+      window.__pTimeout = setTimeout(start, 120);
+    });
+
+    start();
+  })();
 </script>
 </body>
 </html>
+
+
