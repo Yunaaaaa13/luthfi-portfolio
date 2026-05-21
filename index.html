@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Muhammad Luthfi Rafif — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --navy:#0B1426;
+    --navy2:#111c35;
+    --teal:#00C2A8;
+    --teal2:#00997f;
+    --gold:#F5C842;
+    --white:#F8F9FC;
+    --gray:#8895AA;
+    --light:#1A2540;
+    --card:#141e34;
+    --border:rgba(0,194,168,0.18);
+  }
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--navy);
+    color:var(--white);
+    font-family:'DM Sans',sans-serif;
+    font-size:16px;
+    line-height:1.7;
+    overflow-x:hidden;
+  }
+
+  /* NAV */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:1.2rem 4rem;
+    background:rgba(11,20,38,0.85);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--border);
+  }
+  .nav-logo{
+    font-family:'Syne',sans-serif;
+    font-weight:800;font-size:1.1rem;
+    color:var(--teal);letter-spacing:0.04em;
+  }
+  .nav-links{display:flex;gap:2rem;list-style:none}
+  .nav-links a{
+    color:var(--gray);font-size:0.9rem;text-decoration:none;
+    transition:color .2s;font-weight:400;letter-spacing:0.03em;
+  }
+  .nav-links a:hover{color:var(--teal)}
+
+  /* HERO */
+  .hero{
+    min-height:100vh;
+    display:flex;align-items:center;
+    padding:7rem 4rem 4rem;
+    position:relative;overflow:hidden;
+  }
+  .hero::before{
+    content:'';position:absolute;
+    top:-200px;right:-200px;
+    width:600px;height:600px;
+    background:radial-gradient(circle, rgba(0,194,168,0.12) 0%, transparent 70%);
+    pointer-events:none;
+  }
+  .hero::after{
+    content:'';position:absolute;
+    bottom:-100px;left:-100px;
+    width:400px;height:400px;
+    background:radial-gradient(circle, rgba(245,200,66,0.07) 0%, transparent 70%);
+    pointer-events:none;
+  }
+  .hero-inner{
+    display:grid;grid-template-columns:1fr auto;
+    gap:4rem;align-items:center;
+    max-width:1100px;margin:0 auto;width:100%;
+  }
+  .hero-badge{
+    display:inline-flex;align-items:center;gap:8px;
+    background:rgba(0,194,168,0.1);
+    border:1px solid rgba(0,194,168,0.3);
+    border-radius:100px;
+    padding:0.35rem 1rem;
+    font-size:0.82rem;color:var(--teal);
+    letter-spacing:0.05em;text-transform:uppercase;
+    font-weight:500;margin-bottom:1.5rem;
+  }
+  .hero-badge::before{content:'●';font-size:0.5rem;animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+  .hero h1{
+    font-family:'Syne',sans-serif;
+    font-size:clamp(2.4rem,5vw,4rem);
+    font-weight:800;line-height:1.1;
+    margin-bottom:0.5rem;
+  }
+  .hero h1 span{color:var(--teal)}
+  .hero-subtitle{
+    font-size:1.15rem;color:var(--gray);
+    font-weight:300;margin-bottom:1.8rem;
+    max-width:520px;line-height:1.6;
+  }
+  .hero-tags{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:2.5rem}
+  .tag{
+    background:var(--light);
+    border:1px solid var(--border);
+    border-radius:6px;padding:0.3rem 0.85rem;
+    font-size:0.82rem;color:var(--teal);
+    font-weight:500;
+  }
+  .hero-cta{display:flex;gap:1rem;flex-wrap:wrap}
+  .btn-primary{
+    background:var(--teal);color:var(--navy);
+    padding:0.75rem 2rem;border-radius:8px;
+    font-weight:700;font-size:0.95rem;
+    text-decoration:none;border:none;cursor:pointer;
+    font-family:'DM Sans',sans-serif;
+    transition:background .2s,transform .15s;
+    display:inline-block;
+  }
+  .btn-primary:hover{background:var(--teal2);transform:translateY(-1px)}
+  .btn-outline{
+    background:transparent;color:var(--white);
+    padding:0.75rem 2rem;border-radius:8px;
+    font-weight:500;font-size:0.95rem;
+    text-decoration:none;border:1px solid rgba(255,255,255,0.2);cursor:pointer;
+    font-family:'DM Sans',sans-serif;
+    transition:border-color .2s,transform .15s;
+    display:inline-block;
+  }
+  .btn-outline:hover{border-color:var(--teal);color:var(--teal);transform:translateY(-1px)}
+
+  .hero-photo{
+    width:260px;height:320px;
+    border-radius:20px;
+    object-fit:cover;object-position:top center;
+    border:2px solid var(--border);
+    filter:grayscale(10%);
+    position:relative;z-index:1;
+    flex-shrink:0;
+  }
+  .hero-photo-wrap{
+    position:relative;
+    flex-shrink:0;
+  }
+  .hero-photo-wrap::before{
+    content:'';
+    position:absolute;
+    inset:-8px;
+    border-radius:24px;
+    border:1px solid rgba(0,194,168,0.2);
+    z-index:0;
+  }
+  .hero-photo-wrap::after{
+    content:'';
+    position:absolute;
+    bottom:-16px;right:-16px;
+    width:80px;height:80px;
+    background:var(--gold);
+    border-radius:12px;
+    opacity:0.15;
+    z-index:0;
+  }
+
+  /* SECTION COMMON */
+  section{padding:5rem 4rem;max-width:1100px;margin:0 auto}
+  .section-label{
+    font-size:0.78rem;color:var(--teal);letter-spacing:0.12em;
+    text-transform:uppercase;font-weight:600;
+    margin-bottom:0.6rem;
+  }
+  .section-title{
+    font-family:'Syne',sans-serif;
+    font-size:clamp(1.6rem,3vw,2.4rem);
+    font-weight:700;margin-bottom:2.5rem;
+    line-height:1.2;
+  }
+  .section-divider{
+    width:100%;
+    border:none;border-top:1px solid var(--border);
+    margin:0;
+  }
+
+  /* STATS */
+  .stats-strip{
+    display:grid;grid-template-columns:repeat(4,1fr);
+    gap:1px;
+    background:var(--border);
+    border:1px solid var(--border);
+    border-radius:16px;overflow:hidden;
+    margin:0 4rem 0;
+    max-width:1100px;
+    margin-left:auto;margin-right:auto;
+    width:calc(100% - 8rem);
+  }
+  .stat{
+    background:var(--card);
+    padding:1.8rem 2rem;
+    text-align:center;
+  }
+  .stat-num{
+    font-family:'Syne',sans-serif;
+    font-size:2rem;font-weight:800;
+    color:var(--teal);
+  }
+  .stat-label{
+    font-size:0.82rem;color:var(--gray);
+    margin-top:4px;
+  }
+
+  /* SKILLS */
+  .skills-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);
+    gap:1.2rem;
+  }
+  .skill-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:1.4rem 1.6rem;
+    transition:border-color .2s,transform .2s;
+  }
+  .skill-card:hover{border-color:var(--teal);transform:translateY(-3px)}
+  .skill-icon{
+    font-size:1.6rem;margin-bottom:0.8rem;
+  }
+  .skill-name{
+    font-family:'Syne',sans-serif;
+    font-weight:700;font-size:1rem;
+    margin-bottom:0.4rem;
+  }
+  .skill-desc{
+    font-size:0.84rem;color:var(--gray);line-height:1.5;
+  }
+  .skill-level{
+    display:flex;gap:4px;margin-top:1rem;
+  }
+  .dot{
+    width:8px;height:8px;border-radius:50%;
+    background:var(--teal);
+  }
+  .dot.off{background:var(--light)}
+
+  /* EXPERIENCE TIMELINE */
+  .timeline{position:relative;padding-left:2rem}
+  .timeline::before{
+    content:'';position:absolute;
+    left:0;top:0;bottom:0;
+    width:1px;background:var(--border);
+  }
+  .titem{
+    position:relative;
+    margin-bottom:2.5rem;
+    padding-left:1.5rem;
+  }
+  .titem::before{
+    content:'';
+    position:absolute;left:-2rem;top:0.35rem;
+    width:10px;height:10px;border-radius:50%;
+    background:var(--teal);
+    box-shadow:0 0 0 4px rgba(0,194,168,0.15);
+  }
+  .titem.ongoing::before{
+    animation:tpulse 2s infinite;
+  }
+  @keyframes tpulse{
+    0%,100%{box-shadow:0 0 0 4px rgba(0,194,168,0.15)}
+    50%{box-shadow:0 0 0 8px rgba(0,194,168,0.05)}
+  }
+  .t-period{
+    font-size:0.78rem;color:var(--gray);
+    text-transform:uppercase;letter-spacing:0.08em;
+    margin-bottom:0.3rem;
+  }
+  .t-role{
+    font-family:'Syne',sans-serif;
+    font-weight:700;font-size:1.1rem;
+    margin-bottom:0.1rem;
+  }
+  .t-org{
+    font-size:0.9rem;color:var(--teal);
+    margin-bottom:0.7rem;
+  }
+  .t-bullets{
+    list-style:none;
+    padding:0;
+  }
+  .t-bullets li{
+    font-size:0.88rem;color:var(--gray);
+    padding-left:1rem;position:relative;
+    margin-bottom:4px;line-height:1.5;
+  }
+  .t-bullets li::before{
+    content:'→';
+    position:absolute;left:0;
+    color:var(--teal);font-size:0.75rem;
+    top:2px;
+  }
+  .badge-ongoing{
+    display:inline-block;
+    background:rgba(245,200,66,0.12);
+    border:1px solid rgba(245,200,66,0.3);
+    color:var(--gold);
+    font-size:0.7rem;padding:2px 10px;border-radius:100px;
+    font-weight:600;text-transform:uppercase;letter-spacing:0.06em;
+    margin-left:8px;vertical-align:middle;
+  }
+
+  /* PROJECTS */
+  .projects-grid{
+    display:grid;grid-template-columns:repeat(2,1fr);
+    gap:1.4rem;
+  }
+  .project-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:1.8rem;
+    position:relative;overflow:hidden;
+    transition:border-color .2s,transform .2s;
+  }
+  .project-card:hover{border-color:var(--teal);transform:translateY(-3px)}
+  .project-card.ongoing{
+    border-color:rgba(245,200,66,0.25);
+  }
+  .project-card.ongoing:hover{border-color:var(--gold)}
+  .project-status{
+    display:inline-block;
+    font-size:0.72rem;font-weight:600;
+    text-transform:uppercase;letter-spacing:0.08em;
+    padding:3px 12px;border-radius:100px;
+    margin-bottom:1rem;
+  }
+  .ps-done{background:rgba(0,194,168,0.12);color:var(--teal);border:1px solid rgba(0,194,168,0.25)}
+  .ps-ongoing{background:rgba(245,200,66,0.1);color:var(--gold);border:1px solid rgba(245,200,66,0.25)}
+  .project-name{
+    font-family:'Syne',sans-serif;
+    font-weight:700;font-size:1.2rem;margin-bottom:0.6rem;
+  }
+  .project-desc{font-size:0.88rem;color:var(--gray);line-height:1.6;margin-bottom:1rem}
+  .project-stack{display:flex;gap:6px;flex-wrap:wrap}
+  .pstack{
+    background:var(--light);border:1px solid var(--border);
+    border-radius:5px;padding:3px 10px;
+    font-size:0.76rem;color:var(--teal);
+    font-weight:500;
+  }
+  .project-accent{
+    position:absolute;top:0;right:0;
+    width:80px;height:80px;
+    background:radial-gradient(circle at top right, rgba(0,194,168,0.08), transparent 70%);
+    pointer-events:none;
+  }
+  .project-card.ongoing .project-accent{
+    background:radial-gradient(circle at top right, rgba(245,200,66,0.07), transparent 70%);
+  }
+
+  /* CERTIFICATIONS */
+  .certs-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);
+    gap:1.2rem;
+  }
+  .cert-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:1.4rem 1.6rem;
+    transition:border-color .2s,transform .2s;
+  }
+  .cert-card:hover{border-color:var(--teal);transform:translateY(-3px)}
+  .cert-issuer{
+    font-size:0.78rem;color:var(--teal);
+    text-transform:uppercase;letter-spacing:0.08em;
+    font-weight:600;margin-bottom:0.5rem;
+  }
+  .cert-name{
+    font-family:'Syne',sans-serif;
+    font-weight:700;font-size:0.95rem;
+    line-height:1.3;margin-bottom:0.5rem;
+  }
+  .cert-date{font-size:0.8rem;color:var(--gray)}
+  .cert-verify{
+    display:inline-block;margin-top:0.8rem;
+    font-size:0.78rem;color:var(--teal);
+    text-decoration:none;
+    border-bottom:1px solid rgba(0,194,168,0.3);
+    transition:border-color .2s;
+  }
+  .cert-verify:hover{border-color:var(--teal)}
+
+  /* ACTIVITIES */
+  .activities-grid{
+    display:grid;grid-template-columns:repeat(2,1fr);
+    gap:1.4rem;
+  }
+  .act-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:1.6rem;
+    display:flex;gap:1.2rem;
+    transition:border-color .2s;
+  }
+  .act-card:hover{border-color:var(--teal)}
+  .act-icon{
+    width:48px;height:48px;border-radius:12px;
+    background:rgba(0,194,168,0.1);
+    border:1px solid rgba(0,194,168,0.2);
+    display:flex;align-items:center;justify-content:center;
+    font-size:1.3rem;flex-shrink:0;
+  }
+  .act-title{
+    font-family:'Syne',sans-serif;
+    font-weight:700;font-size:0.95rem;margin-bottom:0.3rem;
+  }
+  .act-desc{font-size:0.84rem;color:var(--gray);line-height:1.5}
+  .act-date{
+    font-size:0.76rem;color:var(--teal);
+    margin-top:0.5rem;font-weight:500;
+  }
+
+  /* CONTACT */
+  .contact-wrap{
+    display:grid;grid-template-columns:1fr 1fr;
+    gap:3rem;align-items:start;
+  }
+  .contact-info h2{
+    font-family:'Syne',sans-serif;
+    font-size:2rem;font-weight:800;
+    margin-bottom:1rem;line-height:1.2;
+  }
+  .contact-info p{color:var(--gray);font-size:0.95rem;margin-bottom:2rem}
+  .contact-links{display:flex;flex-direction:column;gap:0.8rem}
+  .clink{
+    display:flex;align-items:center;gap:12px;
+    color:var(--white);text-decoration:none;
+    font-size:0.9rem;
+    padding:0.75rem 1rem;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:10px;
+    transition:border-color .2s,transform .15s;
+  }
+  .clink:hover{border-color:var(--teal);transform:translateX(4px)}
+  .clink-icon{
+    width:32px;height:32px;border-radius:8px;
+    background:rgba(0,194,168,0.1);
+    display:flex;align-items:center;justify-content:center;
+    font-size:0.9rem;
+  }
+
+  /* FOOTER */
+  footer{
+    text-align:center;
+    padding:2rem 4rem;
+    border-top:1px solid var(--border);
+    color:var(--gray);font-size:0.82rem;
+  }
+
+  /* SCROLL FADE IN */
+  .fade-in{
+    opacity:0;transform:translateY(24px);
+    transition:opacity .6s ease, transform .6s ease;
+  }
+  .fade-in.visible{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">MLR.</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#certifications">Certifications</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero" id="about">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-badge">Available for Opportunities</div>
+      <h1>Muhammad<br><span>Luthfi Rafif</span></h1>
+      <p class="hero-subtitle">Information Systems student with expertise in project management, IT governance, and data analytics. Building real solutions at Telkom University Jakarta.</p>
+      <div class="hero-tags">
+        <span class="tag">Project Manager</span>
+        <span class="tag">Data Analyst</span>
+        <span class="tag">IT Governance</span>
+        <span class="tag">Agile Scrum</span>
+        <span class="tag">COBIT Framework</span>
+      </div>
+      <div class="hero-cta">
+        <a href="mailto:luthfirafif188@gmail.com" class="btn-primary">Get In Touch</a>
+        <a href="#experience" class="btn-outline">View My Work</a>
+      </div>
+    </div>
+    <div class="hero-photo-wrap">
+      <img src="1758022745701.jpg"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+           class="hero-photo" alt="Muhammad Luthfi Rafif">
+      <div style="display:none;width:260px;height:320px;border-radius:20px;background:var(--card);border:2px solid var(--border);align-items:center;justify-content:center;flex-direction:column;gap:12px;font-family:'Syne',sans-serif;">
+        <div style="width:80px;height:80px;border-radius:50%;background:rgba(0,194,168,0.15);border:2px solid var(--teal);display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:800;color:var(--teal)">MLR</div>
+        <div style="color:var(--gray);font-size:0.85rem">Muhammad Luthfi Rafif</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats-strip fade-in">
+  <div class="stat">
+    <div class="stat-num">2+</div>
+    <div class="stat-label">Years in IT</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">3</div>
+    <div class="stat-label">Certifications</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">5+</div>
+    <div class="stat-label">Projects</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">98%</div>
+    <div class="stat-label">Accessibility Score</div>
+  </div>
+</div>
+
+<!-- SKILLS -->
+<section id="skills" class="fade-in">
+  <p class="section-label">Capabilities</p>
+  <h2 class="section-title">Skills & Expertise</h2>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="skill-icon">📊</div>
+      <div class="skill-name">Project Management</div>
+      <div class="skill-desc">Agile Scrum methodology, sprint planning, and cross-functional team coordination using Jira & GitHub.</div>
+      <div class="skill-level">
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🔍</div>
+      <div class="skill-name">Data Analytics</div>
+      <div class="skill-desc">Data-driven decision making, dashboards in Power BI, and analytical reporting with business context.</div>
+      <div class="skill-level">
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🏛️</div>
+      <div class="skill-name">IT Governance (COBIT)</div>
+      <div class="skill-desc">COBIT 2019 framework implementation, gap analysis, IT risk evaluation, and governance documentation.</div>
+      <div class="skill-level">
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot off"></div>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">⚠️</div>
+      <div class="skill-name">Risk Management</div>
+      <div class="skill-desc">IT risk assessment, organizational control evaluation, compliance monitoring, and improvement planning.</div>
+      <div class="skill-level">
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot off"></div>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">♿</div>
+      <div class="skill-name">Digital Accessibility</div>
+      <div class="skill-desc">WCAG standards, inclusive design principles, assistive technology knowledge, and accessibility legislation (Equality Act).</div>
+      <div class="skill-level">
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot off"></div><div class="dot off"></div>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">💡</div>
+      <div class="skill-name">Software Development</div>
+      <div class="skill-desc">Requirement analysis, QA coordination, version control with GitHub, and stakeholder communication.</div>
+      <div class="skill-level">
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot off"></div><div class="dot off"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- EXPERIENCE -->
+<section id="experience" class="fade-in">
+  <p class="section-label">Journey</p>
+  <h2 class="section-title">Work Experience</h2>
+  <div class="timeline">
+    <div class="titem ongoing">
+      <div class="t-period">Apr 2026 — Present</div>
+      <div class="t-role">Project Manager — AIRku Software Development <span class="badge-ongoing">Ongoing</span></div>
+      <div class="t-org">AIRku Project · South Jakarta</div>
+      <ul class="t-bullets">
+        <li>Led development of AIRku, a water usage monitoring & management software solution</li>
+        <li>Managed sprint execution and backlog with Jira; coordinated devs, UI/UX, QA, and analysts</li>
+        <li>Oversaw version control workflow through GitHub across the full project lifecycle</li>
+        <li>Maintained communication bridge between stakeholders and development team</li>
+      </ul>
+    </div>
+    <div class="titem ongoing">
+      <div class="t-period">Feb 2026 — Present</div>
+      <div class="t-role">Practicum Assistant <span class="badge-ongoing">Ongoing</span></div>
+      <div class="t-org">Telkom University Jakarta · South Jakarta</div>
+      <ul class="t-bullets">
+        <li>Delivered practicum sessions for Information Systems courses</li>
+        <li>Guided students through technical assignments and IS concepts</li>
+        <li>Developed leadership and mentoring skills in an academic environment</li>
+      </ul>
+    </div>
+    <div class="titem">
+      <div class="t-period">May 2026</div>
+      <div class="t-role">PDD Committee — Project Management Public Lecture</div>
+      <div class="t-org">Telkom University Jakarta · South Jakarta</div>
+      <ul class="t-bullets">
+        <li>Served as Publication, Documentation & Design (PDD) committee for event "How to Manage Project as Scrum Environment as a Product Owner"</li>
+        <li>Managed event publication materials, visual design, and documentation</li>
+        <li>Promoted the event through digital media channels; contributed to smooth execution</li>
+      </ul>
+    </div>
+    <div class="titem">
+      <div class="t-period">Apr 2025 — May 2025</div>
+      <div class="t-role">IT Consultant — COBIT Framework</div>
+      <div class="t-org">Telkom University · South Jakarta</div>
+      <ul class="t-bullets">
+        <li>Assessed and evaluated IT governance processes using COBIT framework</li>
+        <li>Conducted gap analysis to surface improvement opportunities</li>
+        <li>Prepared governance documentation and actionable recommendations</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- PROJECTS -->
+<section id="projects" class="fade-in">
+  <p class="section-label">Work</p>
+  <h2 class="section-title">Projects</h2>
+  <div class="projects-grid">
+    <div class="project-card ongoing">
+      <div class="project-accent"></div>
+      <span class="project-status ps-ongoing">In Progress</span>
+      <div class="project-name">AIRku — Water Management System</div>
+      <div class="project-desc">A software solution to monitor and manage water usage efficiently. Led as Project Manager using Agile Scrum, coordinating a cross-functional team through full SDLC.</div>
+      <div class="project-stack">
+        <span class="pstack">Agile Scrum</span>
+        <span class="pstack">Jira</span>
+        <span class="pstack">GitHub</span>
+        <span class="pstack">Project Management</span>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="project-accent"></div>
+      <span class="project-status ps-done">Completed</span>
+      <div class="project-name">COBIT 2019 IT Governance Assessment</div>
+      <div class="project-desc">Comprehensive IT governance analysis using the COBIT 2019 Design Toolkit. Conducted gap analysis, risk evaluation, and produced improvement recommendations for an organization.</div>
+      <div class="project-stack">
+        <span class="pstack">COBIT 2019</span>
+        <span class="pstack">IT Governance</span>
+        <span class="pstack">Risk Analysis</span>
+        <span class="pstack">Excel</span>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="project-accent"></div>
+      <span class="project-status ps-done">Completed</span>
+      <div class="project-name">Public Lecture Event — PDD Committee</div>
+      <div class="project-desc">Organized and designed publication materials for the "How to Manage Project as Scrum Environment as a Product Owner" public lecture at Telkom University Jakarta, May 2026.</div>
+      <div class="project-stack">
+        <span class="pstack">Event Management</span>
+        <span class="pstack">Design</span>
+        <span class="pstack">Documentation</span>
+        <span class="pstack">Digital Media</span>
+      </div>
+    </div>
+    <div class="project-card ongoing">
+      <div class="project-accent"></div>
+      <span class="project-status ps-ongoing">In Progress</span>
+      <div class="project-name">Data Analytics Portfolio</div>
+      <div class="project-desc">Ongoing projects applying data analytics skills from Google & CertNexus certifications. Building dashboards and analytical reports using Power BI and data visualization tools.</div>
+      <div class="project-stack">
+        <span class="pstack">Power BI</span>
+        <span class="pstack">Data Analytics</span>
+        <span class="pstack">Visualization</span>
+        <span class="pstack">Reporting</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CERTIFICATIONS -->
+<section id="certifications" class="fade-in">
+  <p class="section-label">Credentials</p>
+  <h2 class="section-title">Certifications & Courses</h2>
+  <div class="certs-grid">
+    <div class="cert-card">
+      <div class="cert-issuer">CertNexus / Certiport · Pearson VUE</div>
+      <div class="cert-name">IT Specialist — Data Analytics</div>
+      <div class="cert-date">Issued April 29, 2026 · Expires 2031</div>
+      <br>
+      <div style="font-size:0.8rem;color:var(--gray)">Credential ID: wYuNb-2F6w</div>
+      <a class="cert-verify" href="https://verify.certiport.com" target="_blank">Verify certificate →</a>
+    </div>
+    <div class="cert-card">
+      <div class="cert-issuer">Google · Coursera</div>
+      <div class="cert-name">Foundations: Data, Data, Everywhere</div>
+      <div class="cert-date">Issued May 3, 2026</div>
+      <br>
+      <div style="font-size:0.8rem;color:var(--gray)">Google Data Analytics Certificate Program</div>
+      <a class="cert-verify" href="https://coursera.org/verify/S4HHUBZ0NABQ" target="_blank">Verify certificate →</a>
+    </div>
+    <div class="cert-card">
+      <div class="cert-issuer">Government Digital & Data · FutureLearn</div>
+      <div class="cert-name">Accessibility in Government: Getting Started</div>
+      <div class="cert-date">Issued May 20, 2026</div>
+      <br>
+      <div style="font-size:0.8rem;color:var(--gray)">Overall score: 98%</div>
+      <a class="cert-verify" href="https://futurelearn.com/certificates/4hjlnt0" target="_blank">Verify certificate →</a>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- EDUCATION & ACTIVITIES -->
+<section class="fade-in">
+  <p class="section-label">Background & Activities</p>
+  <h2 class="section-title">Education & Activities</h2>
+  <div class="activities-grid">
+    <div class="act-card">
+      <div class="act-icon">🎓</div>
+      <div>
+        <div class="act-title">Bachelor of Information Systems</div>
+        <div class="act-desc">Telkom University Jakarta, South Jakarta. Focus on IT governance, project management, and systems analysis.</div>
+        <div class="act-date">Sept 2023 — Present</div>
+      </div>
+    </div>
+    <div class="act-card">
+      <div class="act-icon">📢</div>
+      <div>
+        <div class="act-title">PDD Committee — Project Management Lecture</div>
+        <div class="act-desc">Publication, Documentation & Design for the "How to Manage Project as Scrum Environment as a Product Owner" public lecture. Handled visual design, event publication, and digital media.</div>
+        <div class="act-date">May 2026</div>
+      </div>
+    </div>
+    <div class="act-card">
+      <div class="act-icon">🏫</div>
+      <div>
+        <div class="act-title">Social Science — SMAIT Harapan Umat</div>
+        <div class="act-desc">High school at SMAIT Harapan Umat Karawang, West Karawang, with a social science track.</div>
+        <div class="act-date">Jul 2020 — Jun 2023</div>
+      </div>
+    </div>
+    <div class="act-card">
+      <div class="act-icon">👨‍🏫</div>
+      <div>
+        <div class="act-title">Practicum Assistant</div>
+        <div class="act-desc">Assisted in delivering IS practicum sessions at Telkom University Jakarta. Mentored students, prepared lab materials, and developed leadership skills.</div>
+        <div class="act-date">Feb 2026 — Present</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CONTACT -->
+<section id="contact" class="fade-in">
+  <div class="contact-wrap">
+    <div class="contact-info">
+      <p class="section-label">Get In Touch</p>
+      <h2>Let's work<br>together.</h2>
+      <p>I'm open to internship opportunities, collaborations on IT projects, and data analytics work. Feel free to reach out!</p>
+      <div class="contact-links">
+        <a href="mailto:luthfirafif188@gmail.com" class="clink">
+          <div class="clink-icon">✉️</div>
+          luthfirafif188@gmail.com
+        </a>
+        <a href="tel:+6281213616982" class="clink">
+          <div class="clink-icon">📱</div>
+          +62 812-1361-6982
+        </a>
+        <div class="clink" style="cursor:default">
+          <div class="clink-icon">📍</div>
+          Jawa Barat, Indonesia
+        </div>
+      </div>
+    </div>
+    <div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:20px;padding:2rem;">
+        <p class="section-label" style="margin-bottom:1rem">Quick Facts</p>
+        <div style="display:flex;flex-direction:column;gap:1rem">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:1rem;border-bottom:1px solid var(--border)">
+            <span style="color:var(--gray);font-size:0.88rem">Date of Birth</span>
+            <span style="font-size:0.88rem;font-weight:500">27 Juni 2005</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:1rem;border-bottom:1px solid var(--border)">
+            <span style="color:var(--gray);font-size:0.88rem">Place of Birth</span>
+            <span style="font-size:0.88rem;font-weight:500">Ngawi</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:1rem;border-bottom:1px solid var(--border)">
+            <span style="color:var(--gray);font-size:0.88rem">Nationality</span>
+            <span style="font-size:0.88rem;font-weight:500">Indonesian 🇮🇩</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:1rem;border-bottom:1px solid var(--border)">
+            <span style="color:var(--gray);font-size:0.88rem">University</span>
+            <span style="font-size:0.88rem;font-weight:500">Telkom University Jakarta</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="color:var(--gray);font-size:0.88rem">Status</span>
+            <span style="background:rgba(0,194,168,0.12);border:1px solid rgba(0,194,168,0.3);color:var(--teal);font-size:0.78rem;font-weight:600;padding:3px 14px;border-radius:100px">Open to Work</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Muhammad Luthfi Rafif · Built with passion · Information Systems, Telkom University Jakarta</p>
+</footer>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+    }
+  });
+}, {threshold: 0.1});
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// Try to load the actual photo from the uploaded file
+// Since it's a local file, we embed it as base64 would require server processing
+// Instead we show the initials fallback gracefully
+</script>
+</body>
+</html>
